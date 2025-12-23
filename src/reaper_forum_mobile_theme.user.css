@@ -1,0 +1,2378 @@
+/* ==UserStyle==
+@name         Reaper Forum Mobile
+@description  Responsive mobile layout for Cockos Forums (vBulletin 3.8)
+@namespace    atmosfar.styles
+@version      5.2
+@author       atmosfar
+@license      unlicense
+@preprocessor stylus
+==/UserStyle== */
+
+$ignore_this_error = "hello buggy css linter"
+{$ignore_this_error} {};
+
+/* *************************************************************** */
+/* === 1. GLOBAL STYLES (All Pages) === */
+/* *************************************************************** */
+@-moz-document domain("forums.cockos.com"),
+domain("forum.cockos.com") {
+    @media (pointer: coarse) {
+        /* --- Base Resets --- */
+        html { 
+            font-size: 62.5% !important; 
+        }
+        html, body {
+            width: 100% !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: #E1E6E6 !important;
+            overflow-x: hidden !important;
+        }
+        body, td, th, p, li, .smallfont, .alt1, .alt2, a {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 1.6rem !important;
+            line-height: 1.5 !important;
+            color: #333 !important;
+            letter-spacing: normal !important;
+        }
+        
+        .alt1 img, .alt2 img {
+            max-width: 100%!important;
+        }
+
+        /* --- Layout Containers --- */
+        .page, .strip{
+            width: 100% !important;
+            max-width: 100vw!important;
+            min-width: 0 !important;
+            margin: 0;
+        }
+
+        /* --- Header Cleanup --- */
+        div.black { 
+            height: 4em !important; 
+        }
+        div.black > center > div.strip {
+            height: 4em !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 0 10px !important;
+            box-sizing: border-box !important;
+        }
+        div.strip > div[style*="width:360px"] {
+            width: auto !important; 
+            order: 1; 
+            margin: 0 !important; 
+            text-align: left !important;
+        }
+        div.strip > div[style*="width:360px"] img {
+            height: 3.5em !important; 
+            width: auto !important; 
+            margin: 0.25em 0 !important;
+        }
+        div.strip > div[style*="width:320px"]:first-of-type {
+            display: flex !important; 
+            flex-direction: column !important; 
+            justify-content: center !important;
+            width: auto !important; 
+            height: 100% !important; 
+            margin-top: 0 !important; 
+            padding: 0 0.5rem !important;
+            text-align: left !important; 
+            order: 2;
+        }
+        div.strip > div[style*="width:320px"]:last-of-type {
+            display: flex !important; 
+            flex-direction: column !important; 
+            justify-content: center !important;
+            width: auto !important; 
+            height: 100% !important; 
+            margin-top: 0 !important; 
+            padding: 0 0.5rem !important;
+            text-align: right !important; 
+            order: 3;
+        }
+        div.strip > div[style*="width:320px"] div[style="height:11px;"] { 
+            display: none !important; 
+        }
+        div.strip > div[style*="width:320px"] .hdrlink {
+            height: auto !important; 
+            display: block !important; 
+            padding: 1px 0 !important;
+        }
+        div.strip > div[style*="width:320px"] .hdrtop {
+            font-size: 1.2rem !important; 
+            font-weight: normal !important; 
+            color: #9CA8A8 !important;
+            border-bottom: none !important; 
+            line-height: 1.4 !important;
+        }
+        div.strip > div[style*="width:320px"] .hdrbottom { 
+            display: none; 
+        }
+        div.page > div > br { 
+            display: none !important; 
+        }
+
+        /* --- Navbar/Breadcrumbs --- */
+        div.tborder[style*="padding:1px"] {
+            background: #313131 !important; 
+            padding: 0 !important; 
+            overflow-x: auto; 
+            white-space: nowrap;
+        }
+        div.tborder[style*="padding:1px"] tr { 
+            display: flex !important; 
+        }
+        .vbmenu_control {
+            flex-shrink: 0; 
+            box-sizing: border-box; 
+            text-align: center !important;
+            border-left: 1px solid #555; 
+            border-bottom: none;
+        }
+        .vbmenu_control:first-child { 
+            border-left: none !important; 
+        }
+        .vbmenu_control a {
+            color: #EBEBEB !important; 
+            text-decoration: none !important; 
+            font-size: 1.4rem !important;
+            padding: 8px 12px !important; 
+            display: block;
+        }
+        /* Breadcrumb Table Logic */
+        table.tborder:has(td.alt2[nowrap="nowrap"]) { 
+            table-layout: fixed !important; 
+            width: 100% !important; 
+        }
+        tr > td.alt2[nowrap="nowrap"] { 
+            display: none !important; 
+        }
+        tr > td.alt1[width="100%"] {
+            display: block !important; 
+            padding: 8px 10px !important; 
+            background-color: #e1e6e6!important;
+            border-bottom: 1px solid #bbb; 
+            width: 100% !important; 
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+        }
+        tr > td.alt1[width="100%"] table { 
+            width: 100% !important; 
+            table-layout: fixed !important; 
+        }
+        tr > td.alt1[width="100%"] table tr, tr > td.alt1[width="100%"] table td {
+            display: block !important; 
+            width: auto !important; 
+            padding: 0 !important; 
+            font-size: 1.4rem !important;
+        }
+        /* Hide spacer cells in breadcrumb */
+        $forum_breadcrumb = 'tr > td.alt1[width="100%"] tr[valign="bottom"]'
+        
+        {$forum_breadcrumb} > td:first-child,
+        {$forum_breadcrumb} > td:nth-child(2) { 
+            display: none !important; 
+        }
+        
+        {$forum_breadcrumb} > td:nth-child(3) { 
+            padding-bottom: 4px !important; 
+        }
+        
+        {$forum_breadcrumb} > td > span.navbar > a {
+            font-size: 1.4rem!important;
+        }
+
+        /* --- Global Element Styling --- */
+        .tcat > span.smallfont[style*="float:right"] {
+            font-size: 1.3rem !important; 
+            font-weight: normal !important; 
+            float: none !important;
+            display: block !important; 
+            color: #333 !important;
+        }
+        .pagenav { 
+            display: none !important; 
+        }
+        td > .smallfont[style="text-align:left; white-space:nowrap"] { 
+            display: none !important; 
+        }
+
+        /* Footer Stats */
+        tbody#collapseobj_forumhome_activeusers > tr, tbody#collapseobj_forumhome_stats > tr {
+            display: block !important; 
+            background: #E1E6E6 !important; 
+            padding: 14px !important;
+            margin-bottom: 8px !important; 
+            border-bottom: 1px solid #CCC !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+        }
+        tbody#collapseobj_forumhome_activeusers > tr > td, tbody#collapseobj_forumhome_stats > tr > td {
+            display: block !important; 
+            width: 100% !important; 
+            padding: 0 !important;
+            background: none !important; 
+            border: none !important; 
+            text-align: left !important;
+        }
+        tbody#collapseobj_forumhome_activeusers > tr > td.alt2, tbody#collapseobj_forumhome_stats > tr > td.alt2 {
+            display: none !important;
+        }
+    }
+}
+
+/* *************************************************************** */
+/* === 2. FORUM/SEARCH LIST (forumdisplay.php, search.php) === */
+/* *************************************************************** */
+@-moz-document url-prefix("https://forums.cockos.com/forumdisplay.php"),
+               url-prefix("https://forum.cockos.com/forumdisplay.php"),
+               url-prefix("https://forums.cockos.com/search.php"),
+               url-prefix("https://forum.cockos.com/search.php") {
+    @media (pointer: coarse) {
+        
+        .thead { 
+            display: none !important; 
+        }
+        
+        /* "New Thread" Button */
+        table[width="100%"][style*="margin-bottom:3px"] {
+            display: block !important; 
+            float: left !important; 
+            width: auto !important;
+            margin-bottom: 8px !important; 
+            margin-right: 0 !important; 
+            border: 1px solid #777 !important; 
+            border-right: none !important; 
+            background: #E1E6E6 !important;
+        }
+        table[width="100%"][style*="margin-bottom:3px"] tr, table[width="100%"][style*="margin-bottom:3px"] td {
+            display: block !important; 
+            padding: 0 !important; 
+            background: none !important;
+        }
+        table[width="100%"][style*="margin-bottom:3px"] td[align="right"] { 
+            display: none !important; 
+        }
+        table[width="100%"][style*="margin-bottom:3px"] a {
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important;
+            height: 4.2rem; 
+            padding: 0 12px !important; 
+            font-size: 1.4rem !important; 
+            font-weight: bold !important;
+            color: #333 !important; 
+            text-decoration: none !important; 
+            background: none !important; 
+            white-space: nowrap !important;
+        }
+        table[width="100%"][style*="margin-bottom:3px"] a:hover { 
+            background: #D2D9D9 !important; 
+        }
+        table[width="100%"][style*="margin-bottom:3px"] img { 
+            display: none !important; 
+        }
+        table[width="100%"][style*="margin-bottom:3px"] a::before { 
+            content: "New Thread"; 
+        }
+
+        /* Forum Tools Scrolling Bar */
+        table.tborder[cellpadding="6"][style*="border-bottom-width:0px"] {
+            display: block !important; 
+            overflow-x: auto !important; 
+            width: 100% !important;
+            margin-top: 0 !important; 
+            margin-bottom: 8px !important; 
+            background: #E1E6E6 !important; 
+            border: 1px solid #777 !important; 
+            border-left: 0px!important; 
+            border-spacing: 0px !important;
+        }
+        table.tborder[cellpadding="6"][style*="border-bottom-width:0px"] tr { 
+            display: flex !important; 
+            white-space: nowrap !important; 
+        }
+        table.tborder[cellpadding="6"][style*="border-bottom-width:0px"] td {
+            display: block !important; 
+            width: auto !important; 
+            flex-shrink: 0 !important; 
+            box-sizing: border-box;
+            border-left: 1px solid #777 !important; 
+            height: 4.2rem; 
+            padding: 0 !important; 
+            background: none !important;
+        }
+        table.tborder[cellpadding="6"][style*="border-bottom-width:0px"] td.tcat[width="100%"] { 
+            display: none !important; 
+        }
+        table.tborder[cellpadding="6"][style*="border-bottom-width:0px"] a {
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important;
+            height: 100% !important; 
+            padding: 0 12px !important; 
+            font-size: 1.4rem !important;
+            font-weight: bold !important; 
+            color: #333 !important; 
+            text-decoration: none !important; 
+            white-space: nowrap !important;
+        }
+        table.tborder[cellpadding="6"][style*="border-bottom-width:0px"] a:hover { 
+            background: #D2D9D9 !important; 
+        }
+
+        /* --- Thread Cards --- */
+        tbody[id^="forumbits_"] > tr,
+        tbody[id^="threadbits_"] > tr,
+        table#threadslist > tbody > tr:has(td.alt1) {
+            display: block !important; 
+            background: #E1E6E6 !important; 
+            padding: 14px !important;
+            margin-bottom: 8px !important; 
+            border: none !important; 
+            border-bottom: 1px solid #CCC !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        tbody[id^="forumbits_"] > tr > td,
+        tbody[id^="threadbits_"] > tr > td,
+        table#threadslist > tbody > tr:has(td.alt1) > td,
+        tbody > tr:has(> td[id^="f"]) > td {
+            display: block !important; 
+            width: 100% !important; 
+            padding: 0 !important; 
+            background: none !important;
+            border: none !important; 
+            text-align: left !important; 
+            vertical-align: top !important;
+        }
+
+        /* * HIDE JUNK COLUMNS * */
+        tbody[id^="forumbits_"] > tr > td:nth-child(1), 
+        tbody[id^="threadbits_"] > tr > td:nth-child(1),
+        tbody[id^="threadbits_"] > tr > td:nth-child(2), 
+        table#threadslist > tbody > tr:has(td.alt1) > td[id^="td_threadstatusicon"] {
+            display: none !important;
+        }
+        
+        a[id^="thread_gotonew_"] { 
+            display: none !important; 
+        }
+        
+        tbody > tr:has(> td[id^="f"]) > td:not([id^="f"]) {
+            display: none !important;
+        }
+
+        /* * STYLE THE VISIBLE INFO * */
+        
+        /* Title Column */
+        tbody[id^="forumbits_"] > tr > td:nth-child(2), 
+        tbody[id^="threadbits_"] > tr > td:nth-child(3),
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(2) {
+            margin-bottom: 8px !important;
+        }
+        
+        a[id^="thread_title_"] {
+            font-size: 1.6rem !important; 
+            font-weight: 600 !important; 
+            color: #000 !important;
+            text-decoration: none !important;
+        }
+        
+        /* Subforum List Styles */
+        td[id^="f"] a strong {
+            font-size: 2.2rem !important; 
+            font-weight: 600 !important; 
+            color: #000 !important;
+            text-decoration: none !important; 
+            line-height: 1.3 !important;
+        }
+        td[id^="f"] > div.smallfont {
+            font-size: 1.5rem !important; 
+            color: #555 !important; 
+            padding-top: 4px !important;
+        }
+        td[id^="f"] span.smallfont {
+             display: none !important;
+        }
+
+        /* Hide smallfont in Title column (Author info usually) */
+        tbody[id^="forumbits_"] > tr > td:nth-child(2) > div.smallfont,
+        tbody[id^="threadbits_"] > tr > td:nth-child(3) > div.smallfont,
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(2) > div.smallfont {
+            display: none !important;
+        }
+
+        /* Forum Link Column */
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(6),
+        tbody[id^="forumbits_"] > tr > td:nth-child(2) {
+            font-size: 1.5rem !important;
+            color: #555 !important;
+            padding-bottom: 8px !important;
+        }
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(6) a,
+        tbody[id^="forumbits_"] > tr > td:nth-child(2) a {
+            font-size: inherit !important;
+            color: #1a0dab !important;
+            text-decoration: underline !important;
+        }
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(6)::before {
+            content: "in ";
+            color: #555;
+        }
+
+        /* Stats Columns (Replies / Views) */
+        tbody[id^="threadbits_"] > tr > td:nth-child(5), 
+        tbody[id^="threadbits_"] > tr > td:nth-child(6),
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(4),
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(5) {
+            display: inline-block !important; 
+            width: auto !important; 
+            margin-right: 15px;
+            margin-top: 0px; 
+            font-size: 1.5rem !important; 
+            color: #555 !important; 
+            text-decoration: none!important;
+        }
+        tbody[id^="threadbits_"] > tr > td:nth-child(5) a, 
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(4) a {
+            font-size: inherit !important;
+        }
+        
+        tbody[id^="threadbits_"] > tr > td:nth-child(5)::before, 
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(4)::before {
+            content: "Replies: ";
+        }
+        tbody[id^="threadbits_"] > tr > td:nth-child(6)::before, 
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(5)::before {
+            content: "Views: ";
+        }
+        
+        /* Warning box about older posts in search results */
+        table#threadslist tr:has(td.alt1):has(span.smallfont):has(strong) {
+            background:#D2D9D9!important;
+        }
+        
+        table#threadslist tr:has(td.alt1):has(span.smallfont) strong {
+            font-weight:normal!important;
+        }
+
+        /* LAST POST COLUMN */
+        tbody[id^="forumbits_"] > tr > td:nth-child(4), 
+        tbody[id^="threadbits_"] > tr > td:nth-child(4),
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(3) {
+            font-size: 1.5rem !important;
+            color: #555 !important;
+            margin-top: 8px;
+        }
+        
+        /* Formatting the container inside Last Post */
+        tbody[id^="forumbits_"] > tr > td:nth-child(4) div.smallfont,
+        tbody[id^="threadbits_"] > tr > td:nth-child(4) div.smallfont,
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(3) div.smallfont {
+            font-size: inherit !important; 
+            text-align: left !important; 
+            white-space: nowrap !important;
+        }
+
+        /* FIX: Ensure links (Author) in Last Post inherit size */
+        tbody[id^="forumbits_"] > tr > td:nth-child(4) div.smallfont a,
+        tbody[id^="threadbits_"] > tr > td:nth-child(4) div.smallfont a,
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(3) div.smallfont a {
+            font-size: inherit !important; 
+            font-weight: normal !important;
+        }
+
+        /* Hide Go to Last Post icon/link to save space */
+        tbody[id^="forumbits_"] > tr > td:nth-child(4) div.smallfont a[href*="showthread.php?p="],
+        tbody[id^="threadbits_"] > tr > td:nth-child(4) div.smallfont a[href*="showthread.php?p="],
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(3) div.smallfont a[href*="showthread.php?p="] {
+            display: none !important;
+        }
+        
+        /* Hide BR tags to allow flowing */
+        tbody[id^="forumbits_"] > tr > td:nth-child(4) div.smallfont br,
+        tbody[id^="threadbits_"] > tr > td:nth-child(4) div.smallfont br,
+        table#threadslist > tbody > tr:has(td.alt1) > td:nth-child(3) div.smallfont br {
+            display: none !important;
+        }
+        
+        /* --- Quick Editor (Inline) - INTEGRATED HERE --- */
+        table[id$="_editor"] {
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+            table-layout: fixed !important; 
+            margin: 0 !important;
+        }
+        textarea[id$="_textarea"] {
+            width: 100% !important; 
+            min-width: 0 !important; 
+            box-sizing: border-box !important;
+            font-family: monospace !important; 
+            padding: 8px !important;
+        }
+        input[name="reason"] {
+            width: 100% !important; 
+            min-width: 0 !important; 
+            box-sizing: border-box !important; 
+            margin-bottom: 10px !important;
+        }
+        div[align="right"] {
+            text-align: center !important; 
+            margin-top: 8px !important; 
+            display: flex !important;
+            flex-wrap: wrap !important; 
+            justify-content: space-between !important;
+        }
+        div[align="right"] input.button {
+            flex: 1 !important; 
+            margin: 4px !important; 
+            padding: 12px 0 !important;
+            font-size: 1.4rem !important; 
+            min-width: 80px !important;
+        }
+    }
+}
+
+/* *************************************************************** */
+/* === 3. THREAD VIEW (showthread.php) === */
+/* *************************************************************** */
+@-moz-document url-prefix("https://forums.cockos.com/showthread.php"),
+               url-prefix("https://forum.cockos.com/showthread.php") {
+    @media (pointer: coarse) {
+
+        /* Cap max width of posts  */
+        #posts div[id^="post_message_"] { 
+            width: 100% !important; 
+            overflow-x: hidden !important; 
+        }
+        #posts td[id^="td_post_"] {
+            max-width:100vw!important;
+        }
+        /* Hide icon in post header */
+        #posts td[id^="td_post_"]:not(:first-of-type) > div.smallfont, #posts td[id^="td_post_"]:not(:first-of-type) > hr {
+          display: none !important;
+        }
+        
+        /* Polls */
+        form[action*="poll.php"] table.tborder { 
+            table-layout: fixed !important; 
+        }
+        form[action*="poll.php"] div.panel > div[style*="width"] { 
+            width: auto !important; 
+            padding: 8px !important; 
+        }
+        form[action*="poll.php"] div.panel span[style*="float:right"] {
+            float: none !important; 
+            display: block !important; 
+            margin-top: 12px !important;
+            padding-top: 8px !important; 
+            border-top: 1px solid #CCC;
+        }
+        form[action*="poll.php"] div.panel label { 
+            display: block !important; 
+            padding: 6px 0 !important; 
+            line-height: 1.4 !important; 
+        }
+        form[action*="poll.php"] fieldset.fieldset { 
+            margin-bottom: 12px !important; 
+        }
+        
+        /* Images */
+        div[id^="post_message_"] > img {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+        /* Editor */
+        textarea, .wysiwyg {
+            width: 98% !important;
+            box-sizing: border-box;
+        }
+        
+        /* --- 1. CONTROLS ABOVE POSTBITS (Post Reply Button & Pagenav Combined Toolbar) --- */
+        $post_controls_top_table = 'table[width="100%"][style*="margin-bottom:3px"]'
+        $post_controls_top = 'div.page ' + $post_controls_top_table
+        $post_controls_bottom = 'div.page table[width="100%"][style*="margin-top:-3px"]'
+        $pagenav_container = 'td[align="right"]:has(div.pagenav)'
+        $threadtools_toolbar_table = 'table.tborder[cellpadding="6"][style*="border-bottom-width:0px"]'
+        $threadtools_toolbar = 'div.page ' + $threadtools_toolbar_table
+
+        /* Target the Reply/Pagenav table and the Thread Tools table */
+        {$post_controls_top} {
+            display: inline-flex !important; 
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            vertical-align: top;
+            background: #E1E6E6 !important;
+            border: none !important;
+            box-sizing: border-box !important;
+        }
+        
+        {$post_controls_bottom} {
+            border-top: 1px solid #777 !important;
+            border-bottom: 1px solid #777 !important;
+        }
+
+        /* Force the Table Row to behave like a Flex Row */
+        {$post_controls_top} > tbody,
+        {$post_controls_top} > tbody > tr, 
+        {$post_controls_bottom} > tbody,
+        {$post_controls_bottom} > tbody > tr {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            align-items: stretch !important;
+            width: 100% !important;
+        }
+        
+        /* Left Cell: Post Reply Button */
+        {$post_controls_top} > tbody > tr > td.smallfont,
+        {$post_controls_bottom} > tbody > tr > td.smallfont{ 
+            display: block !important; 
+            width: auto !important; 
+            padding: 0 !important;
+            flex-shrink: 0 !important;
+            justify-content: flex-start; 
+            order: 1; 
+        }
+
+        /* Right Cell: Page Navigation Container */
+        {$post_controls_top} > tbody > tr > td[align="right"],
+        {$post_controls_bottom} > tbody > tr > td[align="right"]{
+            display: flex !important;
+            width: auto !important; 
+            order: 2; 
+            padding: 0 !important; 
+            text-align: right !important;
+            justify-content: flex-end !important; /* CHANGE: Aligns content to the right edge */
+            flex-grow: 1 !important;
+            overflow-x: auto !important;
+        }
+        
+        {$post_controls_top} > tbody > tr > td[align="right"] > div.pagenav > table.tborder {
+            width: 100%!important;
+        }
+
+        /* --- POST REPLY BUTTON STYLING --- */
+        $reply_link = ' a[href^="newreply.php"]'
+        {$post_controls_top + $reply_link},
+        {$post_controls_bottom + $reply_link}, {
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important;
+            height: 4.2rem !important; /* Toolbar height benchmark */
+            padding: 0 1.6rem !important; 
+            font-size: 1.4rem !important; 
+            font-weight: bold !important;
+            color: #333 !important; 
+            text-decoration: none !important; 
+            background: #E1E6E6 !important; 
+            white-space: nowrap !important;
+            border-right: 1px solid #777 !important
+        }
+        
+        {$post_controls_top + $reply_link} img,
+        {$post_controls_bottom + $reply_link} img,{ 
+            display: none !important; 
+        }
+        
+        {$post_controls_top + $reply_link}::before,
+        {$post_controls_bottom + $reply_link}::before{ 
+            content: "Reply";
+            
+        }
+        
+        {$post_controls_top + $reply_link}:hover,
+        {$post_controls_bottom + $reply_link}:hover{ 
+            background: #D2D9D9 !important; 
+        }
+
+        /* --- PAGE NAVIGATION STYLING --- */
+        {$pagenav_container} > div.pagenav {
+            display: flex !important;
+            flex-grow: 1 !important;    /* Forces this cell to take up all empty space */
+            width: auto !important;
+            height: 100% !important;
+            margin: 0px!important;
+            align-items: center;
+            justify-content: flex-end; /* Ensure internal table aligns right */
+            background: #d2d9d9 !important;
+        }
+        
+        {$pagenav_container} > div.pagenav > table {
+            margin: 0 !important;
+            border-spacing: 0 !important;
+            border: none !important;
+            height: 100% !important;
+        }
+
+        /* Style the Page Number Boxes */
+        {$pagenav_container} > div.pagenav td {
+            height: 4.2rem !important;
+            line-height: 4.2rem !important;
+            padding: 0 1rem!important;
+            border-left: 1px solid #777 !important;
+            margin-left: -1px !important;
+            border-top: 0px !important;
+            border-radius: 0 !important;  /* Squared off looks better for full-height bars */
+            text-align: center !important;
+            white-space: nowrap;
+            background: #D2D9D9 !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* "Page X of Y" text */
+        {$pagenav_container} > div.pagenav td.vbmenu_control {
+            font-size: 1.4rem!important;
+            border-bottom: 0px!important;
+            text-align: center !important; /* Keeps the text on the left while the cell grows */
+            align-items: center !important;
+            border: 0px !important;
+        }
+
+        /* Style Active Page Number */
+        {$pagenav_container} > div.pagenav td.alt2 {
+            background: #B4C0C0 !important;
+        }
+        
+        {$pagenav_container} > div.pagenav td.alt2 strong{
+            font-size: 1.4rem!important;
+        }
+        
+        /* Remove underlines from page links */
+        {$pagenav_container} > div.pagenav td a{
+            text-decoration: none !important;
+        }
+        
+        /* Remove underlines from page links */
+        {$pagenav_container} > div.pagenav td a{
+            text-decoration: none !important;
+        }
+        
+        /* Hide pagination items while keeping functional buttons and active page */
+        {$pagenav_container} > div.pagenav tr td:not(:has(a[rel="start"])):not(:has(a[rel="prev"])):not(:has(a[rel="next"])):not(:has(a[title^="Last"])):not(.alt2):not(.vbmenu_control) {
+            display: none !important;
+        }
+        
+        /* Target the 'First' link in pagenav to hide text but keep the icon */
+        {$pagenav_container} > div.pagenav a[rel="start"],
+        {$pagenav_container} > div.pagenav a[title^="Last"] {
+            font-size: 0 !important;
+        }
+
+        /* Restore font size only for the icon inside the link */
+        {$pagenav_container}  > div.pagenav a[rel="start"] strong,
+        {$pagenav_container} > div.pagenav a[title^="Last"] strong{
+            font-size: 2rem !important; /* Matches your toolbar font size */
+        }
+        
+        /* --- Replace Prev/Next Arrows with Guillemets --- */
+        /* Target the Previous button link */
+        {$pagenav_container} > div.pagenav a[rel="prev"] {
+            font-size: 0 !important; /* Hide the existing '<' character */
+        }
+
+        {$pagenav_container} > div.pagenav a[rel="prev"]::before {
+            content: "‹"; /* Single left-pointing guillemet */
+            font-size: 2rem !important; /* Restore visibility with standard rem size */
+            font-weight: bold;
+        }
+
+        /* Target the Next button link */
+        {$pagenav_container} > div.pagenav a[rel="next"] {
+            font-size: 0 !important; /* Hide the existing '>' character */
+        }
+
+        {$pagenav_container} > div.pagenav a[rel="next"]::before {
+            content: "›"; /* Single right-pointing guillemet */
+            font-size: 2rem !important; /* Restore visibility with standard rem size */
+            font-weight: bold;
+        }
+        
+        
+        /* --- THREAD TOOLS BAR (The Sibling Table) --- */
+        /* Set the toolbar to flow inline with its sibling (controls above postbits) */
+        {$threadtools_toolbar} {
+             display: inline-flex !important; /* Key change: force flow next to the first table */
+             vertical-align: top;
+             width: 100% !important; 
+             margin: 0px !important;
+             overflow-x: auto !important; 
+             background: #E1E6E6 !important;
+             border: 1px solid #777 !important;
+             border-left: 0px!important;
+             border-spacing: 0px!important;
+        }
+        {$threadtools_toolbar}  tr { 
+            display: flex !important; 
+            white-space: nowrap !important; 
+        }
+        {$threadtools_toolbar}  td {
+            display: block !important; 
+            width: auto !important; 
+            flex-shrink: 0 !important; 
+            box-sizing: border-box;
+            border-left: 1px solid #777 !important; 
+            height: 4.2rem; 
+            padding: 0 !important; 
+            background: none !important;
+        }
+        {$threadtools_toolbar} a {
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important;
+            height: 100% !important; 
+            padding: 0 12px !important; 
+            font-size: 1.4rem !important;
+            font-weight: bold !important; 
+            color: #333 !important; 
+            text-decoration: none !important; 
+            white-space: nowrap !important;
+        }
+        {$threadtools_toolbar}  td.tcat[width="100%"] {
+             width: auto !important; 
+             background: none!important; 
+             border-left: 0px!important;
+        }
+        {$threadtools_toolbar}  td.tcat div.smallfont {
+             display: flex !important; 
+             height: 100% !important;
+        }
+        /* Rebuild the link to first unread post */
+        {$threadtools_toolbar}  td.tcat a:first-child::after { 
+           content: "First Unread";
+           padding-left: 0.5rem;
+        }
+        {$threadtools_toolbar}  td.tcat a:has(strong) { 
+            display: none !important; 
+        }
+        
+        /* Remove border from Thread Tools when there is no Unread button */
+        {$threadtools_toolbar_table}:not(:has(td.tcat a)) td.vbmenu_control#threadtools {
+            border-left: 0px!important;
+        }
+        
+        /* --- DYNAMIC TOOLBAR LAYOUT --- */
+
+        div[align="center"] div.page:not(:has(div.pagenav)) {
+            background: #e1e6e6 !important;
+        }
+
+        /* Condition: SINGLE PAGE (No pagenav present) */
+        {$post_controls_top}:not(:has(div.pagenav)) {
+            display: inline-flex !important;
+            width: auto !important;
+        }
+        
+        {$post_controls_top}:not(:has(div.pagenav)) tr,
+        {$post_controls_top}:not(:has(div.pagenav)) td {
+          width: auto!important;
+        }
+
+        /* Target the Thread Tools table only when it follows a 'no-pagenav' control bar */
+        {$post_controls_top}:not(:has(div.pagenav)) + {$threadtools_toolbar_table} {
+            float:right!important;
+            width: calc(100% - 7.2rem)!important;
+            border: 0px!important;
+        }
+        
+        /* "View First Unread" button cell */
+        $post_controls_top}:not(:has(div.pagenav)) + {$threadtools_toolbar_table} td.tcat {
+            padding: 0 !important;
+            display: inline-flex!important;
+        }
+
+        {$post_controls_top}:not(:has(div.pagenav)) + {$threadtools_toolbar_table} tr {
+          display: inline-flex!important;
+          width: 100%!important;
+        }
+        
+        
+        /* Post Header (Timestamp) */
+        table[id^="post"] > tbody > tr:first-child {
+            display: flex !important;
+            padding: 0.4rem 1rem !important; 
+            background: #313131 !important;
+        }
+        table[id^="post"] > tbody > tr > td.thead {
+            background: none !important; 
+            color: #EBEBEB !important; 
+            border: none !important;
+            font-size: 1.2rem !important; 
+            padding: 2px 0 !important;
+        }
+        table[id^="post"] > tbody > tr > td.thead a { 
+            color: #EBEBEB !important; 
+            font-size: 1.2rem !important;
+        }
+        td.thead img.inlineimg { 
+            display: none !important; 
+        }
+        table[id^="post"] > tbody > tr:first-child > td.thead[align="right"] { 
+            font-size: 1.2rem !important;
+            text-align: right !important; 
+            padding: 2px 0 !important;
+        }
+
+        /* Postbit (User Info) */
+        table[id^="post"] > tbody > tr > td { 
+            display: block !important; 
+            width: 100% !important; 
+            box-sizing: border-box; 
+        }
+        td.alt2[width="175"] {
+            border-bottom: 2px solid #bbb; 
+            padding: 8px !important; 
+            text-align: left !important;
+            display: flex !important; 
+            align-items: center !important;
+        }
+        td.alt1[id^="td_post_"] { 
+            padding: 10px !important; 
+        }
+        td.alt2 > div.smallfont:has(a[href*="member.php"] img[alt*="'s Avatar"]) {
+            display: block !important; 
+            order: 1 !important; 
+            margin: 0 8px 0 0 !important; 
+            padding: 0 !important; 
+            line-height: 1 !important;
+        }
+        td.alt2 img[alt*="'s Avatar"] {
+            height: 2.8rem !important; 
+            width: 2.8rem !important; 
+            object-fit: cover; 
+        }
+        div[id^="postmenu_"] { 
+            font-size: 1.4rem !important; 
+            order: 2 !important; 
+        }
+        div[id^="postmenu_"] a.bigusername { 
+            font-weight: bold !important;
+            text-decoration: none!important;
+        }
+        td.alt2 br, td.alt2 > div.smallfont:not(:has(a[href*="member.php"] img[alt*="'s Avatar"])) { 
+            display: none !important; 
+        }
+        
+        /* FIX: Code Box Overflow */
+        /* Update the outer container of the code box (PHP Code or Code:), overriding inline width */
+        div[style*="margin:20px"] {
+            max-width: 95vw !important;
+            padding: 0 !important;
+            margin: 10px 0 !important;
+            overflow: auto !important; 
+        }
+
+        /* Update the inner scroll container (div.alt2) */
+        /* This container MUST be set to 100% of its new, constrained parent (95vw) */
+        div.alt2[dir="ltr"][style*="width: 640px"] {
+            max-width: 100% !important; 
+            width: 100% !important; /* Inherit the 95vw width from the parent element above */
+            box-sizing: border-box !important;
+            overflow: auto !important; 
+        }
+
+        /* The actual code content (pre or code) must prevent line wrapping, allowing horizontal scroll */
+        td.alt1[id^="td_post_"] pre.alt2,
+        td.alt1[id^="td_post_"] div.alt2 code {
+            word-wrap: normal !important;
+            width: auto !important;
+            max-width: 100% !important;
+        }
+
+        /* --- Quick Editor (Inline) --- */
+        table[id^="vB_Editor"] {
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+            table-layout: fixed !important; 
+            margin: 0 !important;
+        }
+        .vBulletin_editor textarea[id$="_textarea"] {
+            width: 100% !important; 
+            min-width: 0 !important; 
+            box-sizing: border-box !important;
+            font-family: monospace !important; 
+            padding: 0.8rem !important;
+        }
+        .vBulletin_editor input[name="reason"] {
+            width: 100% !important; 
+            min-width: 0 !important; 
+            box-sizing: border-box !important; 
+            margin-bottom: 1.0rem !important;
+        }
+        .vBulletin_editor div[align="right"] {
+            text-align: center !important; 
+            display: flex !important;
+            flex-wrap: wrap !important; 
+            justify-content: space-between !important;
+        }
+        .vBulletin_editor div[align="right"] input.button {
+            flex: 1 !important; 
+            margin: 0.4rem !important; 
+            padding: 1.2rem 0 !important;
+            font-size: 1.4rem !important; 
+            min-width: 8rem !important;
+        }
+    }
+}
+
+
+/* *************************************************************** */
+/* === 4. SINGLE POST VIEW (showpost.php) === */
+/* *************************************************************** */
+@-moz-document url-prefix("https://forums.cockos.com/showpost.php"),
+               url-prefix("https://forum.cockos.com/showpost.php") {
+    @media (pointer: coarse) {
+        
+        /* Post Header (Timestamp) - FIX: Stacked layout for single posts */
+        table[id^="post"] > tbody > tr:first-child {
+            display: block !important; 
+            padding: 0.2rem 1.0rem !important; 
+            background: #313131 !important;
+        }
+        table[id^="post"] > tbody > tr > td.thead {
+            background: none !important; 
+            color: #EBEBEB !important; 
+            border: none !important;
+            font-size: 1.2rem !important; 
+            padding: 0.2rem 0 !important;
+            display: block !important;
+        }
+        table[id^="post"] > tbody > tr > td.thead a { 
+            color: #EBEBEB !important; 
+            font-size: 1.2rem !important; 
+        }
+        td.thead img.inlineimg { 
+            display: none !important; 
+        }
+        table[id^="post"] > tbody > tr:first-child > td.thead[align="right"] { 
+            font-size: 1.2rem !important; 
+            text-align: right !important;
+            padding: 0.2rem 0 !important;
+        }
+
+        /* Postbit (User Info) */
+        table[id^="post"] > tbody > tr > td { 
+            display: block !important; 
+            width: 100% !important; 
+            box-sizing: border-box; 
+        }
+        td.alt2[width="175"] {
+            border-bottom: 0.2rem solid #bbb; 
+            padding: 0.8rem !important; 
+            text-align: left !important;
+            display: flex !important; 
+            align-items: center !important;
+        }
+        td.alt1[id^="td_post_"] { 
+            padding: 1.0rem !important; 
+        }
+        td.alt2 > div.smallfont:has(a[href*="member.php"] img[alt*="'s Avatar"]) {
+            display: block !important; 
+            order: 1 !important; 
+            margin: 0 0.8rem 0 0 !important; 
+            padding: 0 !important; 
+            line-height: 1 !important;
+        }
+        td.alt2 img[alt*="'s Avatar"] {
+            height: 2.8rem !important; 
+            width: 2.8rem !important; 
+            object-fit: cover; 
+            display: block !important;
+        }
+        div[id^="postmenu_"] { 
+            font-size: 1.4rem !important; 
+            order: 2 !important; 
+        }
+        div[id^="postmenu_"] a.bigusername { 
+            font-weight: bold !important;
+            text-decoration: none!important;
+        }
+        td.alt2 br, td.alt2 > div.smallfont:not(:has(a[href*="member.php"] img[alt*="'s Avatar"])) { 
+            display: none !important; 
+        }
+
+        /* Post Content Area */
+        td.alt1[id^="td_post_"] { 
+            padding: 1.0rem !important; 
+        }
+
+        /* FIX: Code Box Overflow */
+        td.alt1[id^="td_post_"] pre.alt2 {
+            white-space: pre !important;
+            word-wrap: normal !important;
+            width: fit-content !important;
+            max-width: none !important;
+        }
+        
+        div[id^="post_message_"] { 
+            width: 100% !important; 
+            overflow-x: auto !important; 
+            overflow-y: hidden !important; 
+            word-wrap: normal !important;
+        }
+        
+        /* FIX: Code Box Overflow */
+        /* Update the outer container of the code box (PHP Code or Code:), overriding inline width */
+        div[style*="margin:20px"] {
+            max-width: 95vw !important;
+            padding: 0 !important;
+            margin: 1.0rem 0 !important;
+            overflow: auto !important; 
+        }
+
+        /* Update the inner scroll container (div.alt2) */
+        /* This container MUST be set to 100% of its new, constrained parent (95vw) */
+        div.alt2[dir="ltr"][style*="width: 640px"] {
+            max-width: 100% !important; 
+            width: 100% !important; /* Inherit the 95vw width from the parent element above */
+            box-sizing: border-box !important;
+            overflow: auto !important; 
+        }
+
+        /* The actual code content (pre or code) must prevent line wrapping, allowing horizontal scroll */
+        td.alt1[id^="td_post_"] pre.alt2,
+        td.alt1[id^="td_post_"] div.alt2 code {
+            word-wrap: normal !important;
+            width: auto !important;
+            max-width: 100% !important;
+        }
+
+        /* --- Quick Editor (Inline) - INTEGRATED HERE --- */
+        table[id$="_editor"] {
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+            table-layout: fixed !important; 
+            margin: 0 !important;
+        }
+        textarea[id$="_textarea"] {
+            width: 100% !important; 
+            min-width: 0 !important; 
+            box-sizing: border-box !important;
+            font-family: monospace !important; 
+            padding: 0.8rem !important;
+        }
+        input[name="reason"] {
+            width: 100% !important; 
+            min-width: 0 !important; 
+            box-sizing: border-box !important; 
+            margin-bottom: 1.0rem !important;
+        }
+        div[align="right"] {
+            text-align: center !important; 
+            margin-top: 0.8rem !important; 
+            display: flex !important;
+            flex-wrap: wrap !important; 
+            justify-content: space-between !important;
+        }
+        div[align="right"] input.button {
+            flex: 1 !important; 
+            margin: 0.4rem !important; 
+            padding: 1.2rem 0 !important;
+            font-size: 1.4rem !important; 
+            min-width: 8rem !important;
+        }
+    }
+}
+
+
+/* *************************************************************** */
+/* === 5. POLL RESULTS VIEW (poll.php) === */
+/* *************************************************************** */
+@-moz-document url-prefix("https://forums.cockos.com/poll.php"),
+               url-prefix("https://forum.cockos.com/poll.php") {
+    @media (pointer: coarse) {
+        table.tborder:has(td[title="Votes"]) {
+            table-layout: fixed !important; 
+            background: #E1E6E6 !important; 
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+            margin-bottom: 8px !important; 
+            border: 1px solid #CCC !important;
+        }
+        td.tcat[colspan="4"] {
+            display: block !important; 
+            width: 100% !important; 
+            box-sizing: border-box !important;
+            padding: 12px !important; 
+            background: #D2D9D9 !important; 
+            font-weight: bold; 
+            border-bottom: 1px solid #bbb;
+        }
+        tr:has(> td.alt1[width="75%"]) {
+            display: flex !important; 
+            flex-wrap: wrap !important; 
+            width: 100% !important;
+            padding: 12px !important; 
+            box-sizing: border-box; 
+            border-bottom: 1px solid #CCC;
+        }
+        tr:has(> td.alt1[width="75%"]) > td {
+            display: flex !important; 
+            width: auto !important; 
+            height: auto !important; 
+            padding: 4px !important;
+            background: none !important; 
+            border: none !important; 
+            white-space: normal !important;
+            text-align: left !important; 
+            align-items: center !important;
+        }
+        td.alt1[width="75%"] {
+            flex-basis: 100% !important; 
+            order: 1 !important; 
+            font-size: 1.8rem !important;
+            font-weight: bold !important; 
+            align-items: flex-start !important; 
+            padding-bottom: 8px !important;
+        }
+        td.alt2[nowrap="nowrap"] {
+            flex-grow: 1 !important; 
+            order: 2 !important; 
+            padding-right: 10px !important;
+        }
+        td.alt2[nowrap="nowrap"] img { 
+            width: 100% !important; 
+            height: 20px !important; 
+            object-fit: fill; 
+        }
+        td.alt2[nowrap="nowrap"] img[src*="-l.gif"], td.alt2[nowrap="nowrap"] img[src*="-r.gif"], td.alt2[nowrap="nowrap"] img[src*="clear.gif"] {
+            display: none !important;
+        }
+        td.alt1[width="12%"][title="Votes"] { 
+            display: none !important; 
+        }
+        td.alt2[width="13%"] {
+            order: 3 !important; 
+            font-size: 1.6rem !important; 
+            font-weight: bold !important; 
+            padding-left: 0 !important;
+        }
+        td.tfoot[colspan="4"] {
+            display: block !important; 
+            width: 100% !important; 
+            box-sizing: border-box !important;
+            padding: 10px 12px !important; 
+            color: #EBEBEB !important; 
+            text-align: center !important;
+            border: none !important; 
+            background: #313131 !important;
+        }
+        td.tfoot[colspan="4"] .smallfont, td.tfoot[colspan="4"] .smallfont strong { 
+            color: #EBEBEB !important; 
+        }
+    }
+}
+
+/* *************************************************************** */
+/* === 6. POSTING PAGES (newreply, newthread, editpost, private) === */
+/* *************************************************************** */
+@-moz-document url-prefix("https://forums.cockos.com/newreply.php"),
+               url-prefix("https://forum.cockos.com/newreply.php"),
+               url-prefix("https://forums.cockos.com/newthread.php"),
+               url-prefix("https://forum.cockos.com/newthread.php"),
+               url-prefix("https://forums.cockos.com/editpost.php"),
+               url-prefix("https://forum.cockos.com/editpost.php"),
+               url-prefix("https://forums.cockos.com/private.php"),
+               url-prefix("https://forum.cockos.com/private.php") {
+    @media (pointer: coarse) {
+        div.panel > div[style*="width"] { 
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+        }
+        .bginput, input[name="title"] {
+            width: 100% !important; 
+            min-width: 0 !important; 
+            box-sizing: border-box !important;
+            font-size: 1.6rem !important; 
+            padding: 0.8rem !important;
+        }
+        table.fieldset { 
+            width: 100% !important; 
+        }
+        textarea {
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+            min-width: 0 !important;
+            padding: 0.8rem !important; 
+            font-family: monospace !important;
+        }
+        div.smallfont { 
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+        }
+        fieldset.fieldset { 
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+            margin: 1rem 0 !important; 
+        }
+        fieldset.fieldset > div { 
+            overflow-x: hidden !important; 
+            white-space: normal !important; 
+        }
+        fieldset.fieldset label { 
+            display: block !important; 
+            padding: 0.8rem 0 !important; 
+            line-height: 1.5 !important; 
+        }
+        
+        /* Topic Review */
+        div[id^="collapseobj_threadreview"] table.tborder { 
+            width: 100% !important; 
+            table-layout: fixed !important; 
+        }
+        div[id^="collapseobj_threadreview"] table.tborder tbody tr, 
+        div[id^="collapseobj_threadreview"] table.tborder tbody td {
+            display: block !important; 
+            width: 100% !important; 
+            box-sizing: border-box !important;
+        }
+        div[id^="collapseobj_threadreview"] td.thead {
+            text-align: left !important; 
+            padding: 0.6rem 1rem !important; 
+            font-size: 1.2rem !important;
+            background: #313131 !important; 
+            color: #ccc !important;
+        }
+        div[id^="collapseobj_threadreview"] td.alt2 {
+            text-align: left !important; 
+            padding: 0.6rem 1rem !important; 
+            background: #d2d9d9 !important;
+            border-bottom: 0.1rem solid #bbb !important; 
+            font-weight: bold !important; 
+            width: 100% !important;
+        }
+        div[id^="collapseobj_threadreview"] td.alt1 {
+            padding: 1rem !important; 
+            background: #e1e6e6 !important; 
+            overflow-x: hidden !important;
+        }
+        div[id^="collapseobj_threadreview"] td.alt1 > div { 
+            margin: 1rem 0 !important; 
+            width: 100% !important; 
+        }
+        div[id^="collapseobj_threadreview"] pre {
+            width: 100% !important; 
+            max-width: 100% !important; 
+            height: auto !important; 
+            margin: 0 !important;
+            padding: 0.8rem !important; 
+            box-sizing: border-box !important; 
+            white-space: pre-wrap !important;
+            word-break: break-all !important;
+        }
+        div[id^="collapseobj_threadreview"] img { 
+            max-width: 100% !important; 
+            height: auto !important; 
+        }
+
+        /* Action Buttons Container - ensures side-by-side layout on both pages */
+        div[style*="margin-top:6rem"]:has(> input.button),
+        div[style*="margin-top:0.6rem"]:has(> input.button),
+        div[style*="margin-top:6px"]:has(> input.button) {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important; 
+            gap: 0.8rem !important;
+            justify-content: center !important;
+            margin-top: 0.6rem !important;
+        }
+
+        /* Individual Action Buttons */
+        input.button {
+            font-size: 1.4rem !important; 
+            padding: 0.8rem 1.6rem !important; 
+            min-height: 4.4rem !important; 
+            width: auto !important; 
+            flex: 0 1 auto !important;
+            display: inline-block !important; 
+            cursor: pointer !important;
+            border-radius: 0.3rem !important; 
+            background: #e1e1e2 !important; 
+            border: 0.1rem solid #888 !important; 
+            color: #000 !important;
+            margin: 0 !important; 
+        }
+    }
+}
+
+/* *************************************************************** */
+/* === 7. INDEX PAGE (Main Forum List) === */
+/* *************************************************************** */
+@-moz-document url("https://forums.cockos.com/"),
+               url("https://forums.cockos.com/index.php"),
+               url("https://forum.cockos.com/"),
+               url("https://forum.cockos.com/index.php") {
+    @media (pointer: coarse) {
+        .thead { 
+            display: none !important; 
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr {
+            display: block !important; 
+            background: #F9F9F9 !important; 
+            padding: 12px !important;
+            margin-bottom: 12px !important; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
+            border-radius: 3px !important; 
+            border: none !important;
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td {
+            display: block !important; 
+            width: 100% !important; 
+            box-sizing: border-box !important;
+            padding: 2px 0 !important; 
+            border: none !important; 
+            background: none !important; 
+            text-align: left !important;
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(1) { 
+            display: none !important; 
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(2) {
+            display: block !important; 
+            margin-bottom: 8px !important; 
+            padding-bottom: 8px !important;
+            border-bottom: 1px solid #e0e0e0 !important;
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(2) div:first-child a {
+            font-size: 1.8rem !important; 
+            font-weight: bold !important; 
+            color: #222 !important;
+            text-decoration: none !important; 
+            display: block; 
+            margin-bottom: 4px;
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(2) div.smallfont {
+            font-size: 1.4rem !important; 
+            color: #555 !important; 
+            line-height: 1.4 !important;
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(3) {
+            display: block !important; 
+            font-size: 1.3rem !important; 
+            background: #f0f0f0 !important;
+            padding: 8px !important; 
+            border-radius: 4px; 
+            margin-top: 4px !important;
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(3) div { 
+            white-space: normal !important; 
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(3) a[href*="showthread.php"] {
+            font-weight: 600 !important; 
+            color: #333 !important;
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(3) div[align="right"] {
+            text-align: left !important; 
+            color: #777 !important; 
+            margin-top: 2px !important;
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(4), tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(5) {
+            display: inline-block !important; 
+            width: auto !important; 
+            font-size: 1.2rem !important;
+            color: #888 !important; 
+            margin-right: 15px !important; 
+            margin-top: 6px !important;
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(4)::before { 
+            content: "Threads: "; 
+        }
+        tbody[id^="collapseobj_forumbit_"] > tr > td:nth-child(5)::before { 
+            content: "Posts: "; 
+        }
+        td.tcat {
+            background: #d2d9d9 !important; 
+            color: #000 !important; 
+            font-size: 1.5rem !important;
+            padding: 10px !important; 
+            border-radius: 3px; 
+            margin-top: 15px !important; 
+            display: block !important;
+        }
+    }
+}
+
+/* *************************************************************** */
+/* === 8. USER CP, PROFILE & PRIVATE MESSAGES (Layout Fixes) === */
+/* *************************************************************** */
+@-moz-document url-prefix("https://forums.cockos.com/usercp.php"),
+               url-prefix("https://forum.cockos.com/usercp.php"),
+               url-prefix("https://forums.cockos.com/profile.php"),
+               url-prefix("https://forum.cockos.com/profile.php"),
+               url-prefix("https://forums.cockos.com/private.php"),
+               url-prefix("https://forum.cockos.com/private.php"),
+               url-prefix("https://forums.cockos.com/subscription.php"),
+               url-prefix("https://forum.cockos.com/subscription.php") {
+    @media (pointer: coarse) {
+
+        /* 1. MAIN LAYOUT: Break the 2-column table structure */
+        table[width="100%"][align="center"] {
+            display: block !important; 
+            width: 100% !important; 
+            max-width: 100vw !important; 
+            box-sizing: border-box !important;
+        }
+        
+        table[width="100%"][align="center"] > tbody, 
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] {
+            display: block !important; 
+            width: 100% !important; 
+            max-width: 100vw !important;
+        }
+
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td {
+            display: block !important; 
+            width: 100% !important; 
+            max-width: 100vw !important; 
+            padding: 0 !important;
+            box-sizing: border-box !important; 
+            overflow: hidden !important;
+        }
+
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:nth-child(2) { 
+            display: none !important; 
+        }
+
+        /* --- 2. TOP NAVIGATION BAR --- */
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:first-child > table.tborder {
+            display: block !important; 
+            width: 100% !important; 
+            max-width: 100% !important; 
+            height: 48px !important;
+            overflow-x: auto !important; 
+            white-space: nowrap !important; 
+            background: #E1E6E6 !important; 
+            border: 1px solid #777 !important; 
+            border-right: none !important; 
+            margin-bottom: 15px !important;
+            padding: 0 !important; 
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:first-child > table.tborder > tbody,
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:first-child > table.tborder > tbody > tr {
+            display: inline-block !important; 
+            vertical-align: top !important; 
+            padding: 0 !important;
+            margin: 0 !important; 
+            border: none !important;
+        }
+
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:first-child > table.tborder td.thead,
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:first-child > table.tborder td.tcat {
+            display: none !important;
+        }
+
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:first-child > table.tborder td.alt2 {
+            display: inline-block !important; 
+            padding: 0 !important; 
+            background: transparent !important; 
+            border: none !important;
+        }
+
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:first-child > table.tborder td.alt2 a {
+            display: flex !important; 
+            align-items: center !important; 
+            height: 48px !important;
+            padding: 0 16px !important; 
+            color: #333 !important; 
+            font-size: 1.4rem !important; 
+            font-weight: bold !important; 
+            text-decoration: none !important; 
+            border-right: 1px solid #bbb !important; 
+            white-space: nowrap !important;
+        }
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:first-child > table.tborder td.alt2 a:hover {
+            background: #D2D9D9 !important;
+        }
+
+        /* --- 3. CONTENT AREA FIXES --- */
+        
+        /* General Content Table */
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:last-child > table.tborder {
+            display: block !important; 
+            width: 100% !important; 
+            max-width: 100vw !important; 
+            box-sizing: border-box !important;
+        }
+
+        /* Force structure to blocks */
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:last-child > table.tborder > thead,
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:last-child > table.tborder > tbody,
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:last-child > table.tborder > tfoot {
+            display: block !important; 
+            width: 100% !important;
+        }
+
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:last-child > table.tborder > thead > tr,
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:last-child > table.tborder > tbody > tr,
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:last-child > table.tborder > tfoot > tr {
+            display: block !important; 
+            width: 100% !important; 
+            box-sizing: border-box !important;
+        }
+
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:last-child > table.tborder td {
+            display: block !important; 
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+            white-space: normal !important;
+        }
+        
+        /* Header Bar (Title of Box) */
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:last-child > table.tborder td.tcat {
+             background: #333 !important; 
+             color: #EBEBEB !important; 
+             padding: 10px !important;
+        }
+        table[width="100%"][align="center"] > tbody > tr[valign="top"] > td:last-child > table.tborder td.tcat a {
+             color: #EBEBEB !important;
+        }
+
+        /* --- 4. USER CP SPECIFIC: New Subscribed Threads List --- */
+        
+        /* Hide the messed up header row */
+        #collapseobj_usercp_subthreads > tr.thead {
+            display: none !important;
+        }
+
+        /* Card Container */
+        #collapseobj_usercp_subthreads > tr:not(.thead):not(:last-child) {
+            display: flex !important; 
+            flex-wrap: wrap !important; 
+            background: #F9F9F9 !important;
+            margin-bottom: 12px !important; 
+            padding: 10px !important; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15) !important;
+            border-radius: 4px !important;
+        }
+
+        /* Column 1: Icon */
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(1) {
+            display: block !important; 
+            width: auto !important; 
+            flex-shrink: 1 !important; 
+            margin-right: 10px !important; 
+            padding: 0 !important; 
+            background: none !important; 
+            border: none !important;
+        }
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(1) img { 
+            width: 20px !important; 
+            height: auto !important; 
+        }
+
+        /* Column 2: Thread Title & Author */
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(2) {
+            display: block !important; 
+            flex: 1 !important; 
+            background: transparent !important; 
+            border: none !important; 
+            padding: 0 !important;
+        }
+        
+        /* Bold Title Link */
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(2) div:first-child a[id^="thread_title"] {
+            font-size: 1.6rem !important; 
+            font-weight: 600 !important; 
+            display: block; 
+            margin-bottom: 4px;
+            text-decoration: none !important; 
+            color: #222 !important;
+        }
+        
+        /* Thread Author (Smaller) */
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(2) div.smallfont {
+            font-size: 1.3rem !important; 
+            color: #666 !important;
+        }
+
+        /* Last Post (Column 3) - Full width grey box */
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(3) {
+            display: block !important; 
+            width: 100% !important; 
+            background: #f0f0f0 !important;
+            border-radius: 4px; 
+            padding: 8px !important; 
+            margin-top: 10px !important; 
+            border: none !important; 
+            font-size: 1.2rem !important;
+        }
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(3) div { 
+            text-align: left !important; 
+        }
+
+        /* Replies (Column 4) */
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(4) {
+            display: inline-block !important; 
+            width: auto !important; 
+            background: transparent !important;
+            border: none !important; 
+            margin-top: 8px !important; 
+            margin-right: 15px !important; 
+            color: #777 !important; 
+            font-size: 1.2rem !important;
+        }
+        /* FIX: Force the number link to match the text size */
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(4) a {
+            font-size: 1.2rem !important;
+            font-weight: normal !important;
+            color: #777 !important;
+        }
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(4)::before { 
+            content: "Replies: "; 
+        }
+
+        /* Views (Column 5) */
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(5) {
+            display: inline-block !important; 
+            width: auto !important; 
+            background: transparent !important;
+            border: none !important; 
+            margin-top: 8px !important; 
+            color: #777 !important; 
+            font-size: 1.2rem !important;
+        }
+        #collapseobj_usercp_subthreads > tr:not(:last-child) > td:nth-child(5)::before { 
+            content: "Views: "; 
+        }
+
+        /* Footer "View all subscribed threads" */
+        #collapseobj_usercp_subthreads > tr:last-child {
+             display: block !important; 
+             width: 100% !important; 
+             padding: 0 !important; 
+             background: none !important;
+             box-shadow: none !important; 
+             border: none !important; 
+             margin: 0 !important;
+        }
+        #collapseobj_usercp_subthreads > tr:last-child > td {
+             display: block !important; 
+             width: 100% !important; 
+             box-sizing: border-box !important;
+             text-align: center !important; 
+             padding: 12px !important;
+             background: #e1e6e6 !important; 
+             border: none !important;
+        }
+
+        /* Private Messages */
+        form[action="private.php"] table.tborder { 
+            display: block !important; 
+            width: 100% !important; 
+        }
+        form[action="private.php"] tr {
+            display: flex !important; 
+            flex-wrap: wrap !important; 
+            background: #F9F9F9 !important; 
+            border-bottom: 1px solid #ccc !important;
+            margin-bottom: 8px !important; 
+            padding: 8px !important; 
+            width: 100% !important; 
+            box-sizing: border-box !important;
+        }
+        form[action="private.php"] td:first-child, 
+        form[action="private.php"] td:nth-child(2) { 
+            display: none !important; 
+        }
+    }
+}
+
+/* *************************************************************** */
+/* === 9. SUBSCRIPTIONS PAGE (subscription.php) === */
+/* *************************************************************** */
+@-moz-document url-prefix("https://forums.cockos.com/subscription.php"),
+               url-prefix("https://forum.cockos.com/subscription.php") {
+    @media (pointer: coarse) {
+        div.panel > div[style*="width"] { 
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+        }
+        fieldset.fieldset { 
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+            min-width: 0 !important; 
+        }
+        select { 
+            max-width: 100% !important; 
+            margin-bottom: 5px !important; 
+        }
+        
+        form[action*="dostuff"] table.tborder { 
+            background: none !important; 
+            border: none !important; 
+        }
+        /* HEADER FIX (Dark Grey Bar) */
+        form[action*="dostuff"] > table.tborder > tbody > tr:first-child {
+            display: block !important; 
+            margin-bottom: 10px !important; 
+            background: #333 !important; 
+            border-radius: 4px;
+        }
+        
+        form[action*="dostuff"] > table.tborder > tbody > tr:first-child > td.tcat {
+            display: block !important; 
+            width: 100% !important; 
+            box-sizing: border-box !important;
+            background: transparent !important; 
+            color: #EBEBEB !important; 
+            padding: 10px !important; 
+            border: none !important;
+        }
+        
+        form[action*="dostuff"] > table.tborder > tbody > tr:first-child > td.tcat a {
+            color: #EBEBEB !important; 
+            text-decoration: underline;
+        }
+
+        /* Hide desktop column headers */
+        form[action*="dostuff"] tr:has(td.thead) { 
+            display: none !important; 
+        }
+
+        /* CARD ROW STYLING */
+        form[action*="dostuff"] tbody tr:not(:first-child):not(:last-child):not(:has(td.thead)) {
+            display: flex !important; 
+            flex-wrap: wrap !important; 
+            align-items: flex-start !important;
+            position: relative !important; 
+            background: #F9F9F9 !important; 
+            margin-bottom: 12px !important;
+            padding: 12px !important; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important; 
+            border-radius: 4px !important;
+            border: 1px solid #ddd !important;
+        }
+
+        /* COLUMN 1: Status Icon */
+        form[action*="dostuff"] tbody tr > td:nth-child(1) {
+            display: block !important; 
+            width: 24px !important; 
+            padding: 0 !important; 
+            margin-right: 10px !important;
+            background: transparent !important; 
+            border: none !important; 
+            flex-shrink: 0 !important;
+        }
+        form[action*="dostuff"] tbody tr > td:nth-child(1) img { 
+            width: 20px !important; 
+            height: auto !important; 
+        }
+
+        /* COLUMN 2: Thread Title & Starter */
+        form[action*="dostuff"] tbody tr > td:nth-child(2) {
+            display: block !important; 
+            flex: 1 !important; 
+            min-width: 0 !important; 
+            padding: 0 !important;
+            background: transparent !important; 
+            border: none !important; 
+            padding-right: 30px !important;
+        }
+        
+        /* Style the Title Link (Bold, No Underline) */
+        form[action*="dostuff"] tbody tr > td:nth-child(2) a[id^="thread_title_"] {
+            font-size: 1.6rem !important; 
+            font-weight: bold !important; 
+            color: #222 !important;
+            text-decoration: none !important; 
+            display: block; 
+            margin-bottom: 4px; 
+            line-height: 1.3 !important;
+        }
+        
+        /* Style the Author info (Smaller, Grey) */
+        form[action*="dostuff"] tbody tr > td:nth-child(2) div.smallfont {
+            font-size: 1.3rem !important; 
+            color: #666 !important;
+        }
+
+        /* COLUMN 3: Last Post Info */
+        form[action*="dostuff"] tbody tr > td:nth-child(3) {
+            display: block !important; 
+            width: 100% !important; 
+            font-size: 1.2rem !important; 
+            background: #f0f0f0 !important;
+            border-radius: 4px; 
+            padding: 8px !important; 
+            margin-top: 10px !important; 
+            border: none !important;
+        }
+        form[action*="dostuff"] tbody tr > td:nth-child(3) div { 
+            text-align: left !important; 
+            white-space: normal !important; 
+        }
+
+        /* COLUMN 4: Notification Type (HIDDEN) */
+        form[action*="dostuff"] tbody tr > td:nth-child(4) { 
+            display: none !important; 
+        }
+
+        /* COLUMN 5: Checkbox (Selection) */
+        form[action*="dostuff"] tbody tr > td:nth-child(5) {
+            display: block !important; 
+            position: absolute !important; 
+            top: 10px !important; 
+            right: 10px !important;
+            width: auto !important; 
+            background: transparent !important; 
+            border: none !important; 
+            padding: 0 !important;
+        }
+        form[action*="dostuff"] tbody tr > td:nth-child(5) input { 
+            transform: scale(1.4); 
+            margin: 0 !important; 
+        }
+        
+        /* --- FOOTER --- */
+        form[action*="dostuff"] tbody tr:last-child {
+             display: block !important; 
+             background: none !important; 
+             border: none !important; 
+             box-shadow: none !important;
+             padding: 0 !important; 
+             margin-top: 10px !important;
+        }
+        form[action*="dostuff"] tbody tr:last-child td.tfoot {
+             display: block !important; 
+             width: 100% !important; 
+             box-sizing: border-box !important;
+             text-align: left !important; 
+             padding: 10px !important; 
+             background: #e1e6e6 !important;
+        }
+    }
+}
+
+/* *************************************************************** */
+/* === 10. ADVANCED SEARCH PAGE (search.php) === */
+/* *************************************************************** */
+@-moz-document url-prefix("https://forums.cockos.com/search.php"),
+               url-prefix("https://forum.cockos.com/search.php") {
+    @media (pointer: coarse) {
+        form#searchform table.panel > tbody > tr { 
+            display: flex !important; 
+            flex-direction: column !important; 
+        }
+        form#searchform table.panel > tbody > tr > td {
+            display: block !important; 
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+            padding: 0 !important;
+        }
+        form#searchform fieldset.fieldset {
+            margin: 0 0 10px 0 !important; 
+            width: 100% !important; 
+            box-sizing: border-box !important;
+        }
+        form#searchform input.bginput, form#searchform select {
+            width: 100% !important; 
+            max-width: 100% !important; 
+            box-sizing: border-box !important;
+            height: 4.2rem !important; 
+            font-size: 1.6rem !important; 
+            margin-bottom: 8px !important;
+        }
+        div#userfield { 
+            width: 100% !important; 
+        }
+        div#userfield input { 
+            width: 100% !important; 
+        }
+        fieldset.fieldset > div {
+             display: flex !important; 
+             flex-wrap: wrap !important; 
+             align-items: center !important;
+        }
+        fieldset.fieldset > div > select { 
+            flex: 1 !important; 
+            min-width: 120px !important; 
+            margin-right: 8px !important; 
+        }
+        fieldset.fieldset > div > input[name="replylimit"] {
+             width: 60px !important; 
+             text-align: center !important; 
+             margin-right: 8px !important;
+        }
+        select[name="forumchoice[]"] { 
+            height: 200px !important; 
+        }
+        form#searchform input.button {
+            display: block !important; 
+            width: 100% !important; 
+            margin: 10px 0 !important;
+            padding: 12px !important; 
+            font-size: 1.6rem !important;
+        }
+        form#searchform > div[style*="margin-top:6px"] { 
+            text-align: center !important; 
+            padding: 10px !important; 
+        }
+        div[align="center"][style*="margin-top:20px"] {
+            display: flex !important; 
+            flex-direction: column !important; 
+            padding: 10px !important;
+        }
+        div[align="center"][style*="margin-top:20px"] select { 
+            margin-bottom: 10px !important; 
+        }
+        div[align="center"][style*="margin-top:20px"] input.button { 
+            width: 100% !important; 
+            padding: 12px !important; 
+        }
+    }
+}
+/* *************************************************************** */
+/* === 11. USER PROFILE PAGE (profile.php) === */
+/* *************************************************************** */
+@-moz-document url-prefix("https://forums.cockos.com/member.php"),
+               url-prefix("https://forum.cockos.com/member.php") {
+    @media (pointer: coarse) {
+
+        /* 1. Reset Containers and Sidebar */
+        #content_container, #content, #sidebar_container {
+            width: 100% !important;
+            float: none !important;
+            margin-right: 0 !important;
+            box-sizing: border-box;
+        }
+
+        /* 2. Top Header (Username & Title) */
+        #main_userinfo,  #profile_tabs, #sidebar_container{
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+            padding-top: 15px!important;
+            padding-bottom: 0px!important;
+            margin-bottom: 0px!important;
+            background-color: #9CA8A8 !important; /* Matches breadcrumb area background */
+        }
+        
+        #main_userinfo h1 {
+            font-size: 2.2rem !important;
+            font-weight: bold !important;
+            margin-top: 5px !important;
+            margin-bottom: 5px !important;
+            line-height: 1.2 !important;
+        }
+        #main_userinfo h2 {
+            font-size: 1.4rem !important;
+            color: #555 !important;
+            margin-bottom: 10px !important;
+        }
+        
+        #aboutme {
+            margin: 0px!important;
+        }
+
+        /* 3. Link Bar (Send Message, User Lists) */
+        #link_bar ul.thead {
+            display: flex !important;
+            overflow-x: auto !important;
+            background: #313131 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important;
+            white-space: nowrap !important;
+        }
+        #link_bar li.thead {
+            float: none !important;
+            margin-right: 0 !important;
+            border-right: 1px solid #555 !important;
+        }
+        #link_bar li.thead a {
+            display: block !important;
+            padding: 10px 16px !important;
+            color: #EBEBEB !important;
+            font-size: 1.3rem !important;
+            text-decoration: none !important;
+        }
+        
+        /* Activity bar beneath Link Bar */
+        #activity_info div.alt2 {
+            padding: 10px !important;
+            background: #D2D9D9 !important;
+            border-bottom: 1px solid #BBB !important;
+            font-size: 1.2rem !important;
+        }
+
+        /* 4. Tab List Navigation */
+        ul.tab_list {
+            display: flex !important;
+            width: 100% !important;
+            height: 44px !important;
+            box-sizing: border-box !important;
+            background: #313131 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border-bottom: none !important;
+            overflow: hidden !important;
+        }
+        ul.tab_list li {
+            flex: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: 44px !important;
+            width: auto !important;
+            padding: 0 5rem !important;
+            font-size: 1.4rem !important;
+            font-weight: bold !important;
+            color: #EBEBEB !important;
+            background: #313131 !important;
+            border: none !important;
+            border-right: 1px solid #555 !important;
+            text-align: center !important;
+            border-radius: 0 !important;
+        }
+        
+        ul.tab_list li.overflow_tab {
+            display: none!important;
+        }
+        
+        /* Active Tab State */
+        ul.tab_list li.tcat {
+            background-color: #454545 !important; 
+        }
+        
+        ul.tab_list li:last-child {
+            border-right: none !important;
+        }
+        
+        /* Hide tab bar bottom padding */
+        div.tab_header {
+            padding: 0 !important;
+        }
+        
+        #contactinfo #messaging_list > li {
+            white-space: normal!important;
+        }
+
+        /* 5. Main Content Blocks (About Me, Stats, etc.) */
+        .content_block {
+            background: #F9F9F9 !important;
+            margin-bottom: 15px !important;
+            border: 1px solid #CCC !important;
+            border-radius: 4px !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+            padding: 0 !important;
+            overflow: hidden;
+        }
+        
+        /* Remove gap between tabs and the first card */
+        #profile_tabs > div.content_block {
+            border-top: none !important;
+            margin-top: 0 !important;
+        }
+        .block_row, .alt1.block_row {
+            padding: 12px !important;
+            background: transparent !important;
+        }
+        dl.profilefield_list dd {
+            margin-left: 0 !important;
+            padding-left: 10px;
+            border-left: 2px solid #DDD;
+        }
+
+        /* 6. Mini Statistics Box */
+        #sidebar_container {
+            margin-top: 10px !important;
+        }
+        #stats_mini.content_block {
+            margin-top: 0 !important;
+        }
+        #stats_mini table {
+            width: 100% !important;
+        }
+        #stats_mini .block_row {
+            padding: 12px 15px !important;
+        }
+        #stats_mini dl.profilefield_list dt {
+            font-weight: bold !important;
+            color: #555 !important;
+            margin-top: 5px !important;
+        }
+        #stats_mini dl.profilefield_list dt::after {
+            content: ":";
+        }
+        #stats_mini dl.profilefield_list dd {
+            margin-left: 0 !important;
+            padding-left: 0 !important;
+            border-left: none !important;
+        }
+        #stats_mini .block_footer {
+            background: #D2D9D9 !important;
+            text-align: center !important;
+            padding: 10px !important;
+            border-top: 1px solid #CCC !important;
+        }
+        #stats_mini .block_footer a {
+            font-weight: bold !important;
+            text-decoration: none !important;
+            color: #333 !important;
+            display: block;
+        }
+
+        /* 7. Avatar Fix */
+        #user_avatar {
+            max-width: 70px !important;
+            height: auto !important;
+            border-radius: 4px;
+        }
+    }
+}
+
+@-moz-document url-prefix("https://forums.cockos.com/editpost.php"),
+               url-prefix("https://forum.cockos.com/editpost.php"), 
+               url-prefix("https://forums.cockos.com/newreply.php"),
+               url-prefix("https://forum.cockos.com/newreply.php") {
+
+    @media (pointer: coarse) {       
+
+        /* --- 1. WYSIWYG Editor Container (#vB_Editor_001) --- */
+        #vB_Editor_001.vBulletin_editor {
+            display: block !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+            overflow-x: hidden !important;
+        }
+
+        /* Force clean flex rows for the toolbar containers to ensure shared baseline */
+        #vB_Editor_001 .controlbar table, 
+        #vB_Editor_001 .controlbar tbody, 
+        #vB_Editor_001 .controlbar tr {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            width: 100% !important;
+            box-sizing: border-box;
+        }
+
+        /* Standardize button container cells to prevent staircase wrapping */
+        #vB_Editor_001 .controlbar td {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: 3.6rem !important;
+            padding: 0.2rem !important;
+            box-sizing: border-box;
+        }
+
+        /* Aggressively hide legacy spacers and separator images causing uneven gaps */
+        #vB_Editor_001 .controlbar td[width="100%"],
+        #vB_Editor_001 .controlbar td:empty,
+        #vB_Editor_001 .controlbar img[src*="separator.gif"] {
+            display: none !important;
+        }
+
+        /* Constrain select dropdowns to stay within the row height and viewport */
+        #vB_Editor_001 .controlbar select {
+            max-height: 2.4rem !important;
+            margin: 0 !important;
+            font-size: 1.2rem !important;
+            max-width: 9.0rem !important;
+        }
+
+        /* --- 2. Editor Input Logic (Textarea & Iframe Toggle) --- */
+        
+        /* Cleanup padding on the container specifically when holding the textarea */
+        td.controlbar:has(> #vB_Editor_001_textarea) {
+            padding: 0 !important;
+            width: 100% !important;
+        }
+
+        /* Responsive width for visible editor states (Textarea or Iframe) */
+        #vB_Editor_001_textarea:not([style*="display: none"]), 
+        #vB_Editor_001_iframe:not([style*="display: none"]) {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            min-width: 0 !important;
+        }
+
+        /* Maintain strict hidden state to respect vBulletin JS toggles */
+        #vB_Editor_001_textarea[style*="display: none"], 
+        #vB_Editor_001_iframe[style*="display: none"] {
+            display: none !important;
+        }
+
+        /* Ensure the control bar itself doesn't force a minimum width */
+        #vB_Editor_001_controls.controlbar {
+            width: 100% !important;
+            box-sizing: border-box !important;
+            overflow-x: auto !important;
+        }
+
+        /* --- 3. Additional Options Section (#collapseobj_newpost_options) --- */
+        
+        /* Kill hardcoded width on internal container */
+        #collapseobj_newpost_options div[style*="width:640px"] {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Stack nested table rows vertically */
+        #collapseobj_newpost_options .fieldset table,
+        #collapseobj_newpost_options .fieldset tbody,
+        #collapseobj_newpost_options .fieldset tr,
+        #collapseobj_newpost_options .fieldset td {
+            display: block !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Vertical spacing for stacked dropdowns */
+        #collapseobj_newpost_options .fieldset td:not(:last-child) {
+            margin-bottom: 1.2rem !important;
+        }
+
+        /* Global input/button sizing for the options panel */
+        #collapseobj_newpost_options select,
+        #collapseobj_newpost_options .button {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* --- Additional Options Action Buttons Fix --- */
+
+        /* Target the specific container for buttons inside the Options panel */
+        #collapseobj_newpost_options .panelsurround > div[style*="margin-top:6px"] {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            gap: 0.8rem !important;
+            justify-content: center !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Override the 100% width rule specifically for buttons in this section */
+        #collapseobj_newpost_options .panelsurround > div[style*="margin-top:6px"] input.button {
+            width: auto !important; 
+            flex: 0 1 auto !important;
+            margin: 0 !important;
+            padding: 0.8rem 1.6rem !important;
+            min-height: 4.4rem !important;
+            font-size: 1.4rem !important;
+        }
+    }
+}
+
+/* Remove WYSIWG iframe margin. This only works if your CSS manager is set to inject into all frames */
+@-moz-document url-prefix("https://forums.cockos.com/"),
+@-moz-document url-prefix("https://forum.cockos.com/") {
+    body.wysiwyg {
+        margin: 0rem !important;
+        padding: 0.5rem !important;
+        box-sizing: border-box !important;
+        height: 100% !important;
+    }
+}
