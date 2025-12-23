@@ -2368,7 +2368,7 @@ domain("forum.cockos.com") {
 
 /* Remove WYSIWG iframe margin. This only works if your CSS manager is set to inject into all frames */
 @-moz-document url-prefix("https://forums.cockos.com/"),
-@-moz-document url-prefix("https://forum.cockos.com/") {
+               url-prefix("https://forum.cockos.com/") {
     body.wysiwyg {
         margin: 0rem !important;
         padding: 0.5rem !important;
