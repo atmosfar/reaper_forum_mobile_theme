@@ -194,9 +194,7 @@ domain("forum.cockos.com") {
             display: block !important; 
             color: #333 !important;
         }
-        .pagenav { 
-            display: none !important; 
-        }
+
         td > .smallfont[style="text-align:left; white-space:nowrap"] { 
             display: none !important; 
         }
@@ -237,6 +235,11 @@ domain("forum.cockos.com") {
             display: none !important; 
         }
         
+        /* Remove threads list table border */
+        table#threadslist {
+            border-spacing: 0px!important;
+        }
+        
         /* "New Thread" Button */
         table[width="100%"][style*="margin-bottom:3px"] {
             display: block !important; 
@@ -244,7 +247,7 @@ domain("forum.cockos.com") {
             width: auto !important;
             margin-bottom: 8px !important; 
             margin-right: 0 !important; 
-            border: 1px solid #777 !important; 
+            border: 0px solid #777 !important; 
             border-right: none !important; 
             background: #E1E6E6 !important;
         }
@@ -358,7 +361,7 @@ domain("forum.cockos.com") {
             display: none !important;
         }
         
-        a[id^="thread_gotonew_"] { 
+        a[onclick^="attachments"] { 
             display: none !important; 
         }
         
@@ -500,40 +503,120 @@ domain("forum.cockos.com") {
             display: none !important;
         }
         
-        /* --- Quick Editor (Inline) - INTEGRATED HERE --- */
-        table[id$="_editor"] {
-            width: 100% !important; 
-            box-sizing: border-box !important; 
-            table-layout: fixed !important; 
-            margin: 0 !important;
+        /* --- PAGE NAVIGATION STYLING --- */
+        
+        table:has(div.pagenav) {
+          margin: 0px!important;
         }
-        textarea[id$="_textarea"] {
-            width: 100% !important; 
-            min-width: 0 !important; 
-            box-sizing: border-box !important;
-            font-family: monospace !important; 
-            padding: 8px !important;
-        }
-        input[name="reason"] {
-            width: 100% !important; 
-            min-width: 0 !important; 
-            box-sizing: border-box !important; 
-            margin-bottom: 10px !important;
-        }
-        div[align="right"] {
-            text-align: center !important; 
-            margin-top: 8px !important; 
+
+        $pagenav_container = 'td[align="right"]:has(div.pagenav)'
+
+        {$pagenav_container} > div.pagenav {
             display: flex !important;
-            flex-wrap: wrap !important; 
-            justify-content: space-between !important;
+            flex-grow: 1 !important;    /* Forces this cell to take up all empty space */
+            width: auto !important;
+            height: 100% !important;
+            margin: 0px!important;
+            align-items: center;
+            justify-content: flex-end; /* Ensure internal table aligns right */
+            background: #d2d9d9 !important;
         }
-        div[align="right"] input.button {
-            flex: 1 !important; 
-            margin: 4px !important; 
-            padding: 12px 0 !important;
-            font-size: 1.4rem !important; 
-            min-width: 80px !important;
+        
+        {$pagenav_container} > div.pagenav > table {
+            margin: 0 !important;
+            border-spacing: 0 !important;
+            border: none !important;
+            height: 100% !important;
         }
+
+        /* Style the Page Number Boxes */
+        {$pagenav_container} > div.pagenav td {
+            height: 4.2rem !important;
+            line-height: 4.2rem !important;
+            padding: 0 1rem!important;
+            border-left: 1px solid #777 !important;
+            margin-left: -1px !important;
+            border-top: 0px !important;
+            border-radius: 0 !important;  /* Squared off looks better for full-height bars */
+            text-align: center !important;
+            white-space: nowrap;
+            background: #D2D9D9 !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* "Page X of Y" text */
+        {$pagenav_container} > div.pagenav td.vbmenu_control {
+            font-size: 1.4rem!important;
+            border-bottom: 0px!important;
+            text-align: center !important; /* Keeps the text on the left while the cell grows */
+            align-items: center !important;
+            border: 0px !important;
+        }
+
+        /* Style Active Page Number */
+        {$pagenav_container} > div.pagenav td.alt2 {
+            background: #B4C0C0 !important;
+        }
+        
+        {$pagenav_container} > div.pagenav td.alt2 strong{
+            font-size: 1.4rem!important;
+        }
+        
+        /* Remove underlines from page links */
+        {$pagenav_container} > div.pagenav td a{
+            text-decoration: none !important;
+        }
+        
+        /* Remove underlines from page links */
+        {$pagenav_container} > div.pagenav td a{
+            text-decoration: none !important;
+        }
+        
+        /* Hide pagination items while keeping functional buttons and active page */
+        {$pagenav_container} > div.pagenav tr td:not(:has(a[rel="start"])):not(:has(a[rel="prev"])):not(:has(a[rel="next"])):not(:has(a[title^="Last"])):not(.alt2):not(.vbmenu_control) {
+            display: none !important;
+        }
+        
+        /* Target the 'First' link in pagenav to hide text but keep the icon */
+        {$pagenav_container} > div.pagenav a[rel="start"],
+        {$pagenav_container} > div.pagenav a[title^="Last"] {
+            font-size: 0 !important;
+        }
+
+        /* Restore font size only for the icon inside the link */
+        {$pagenav_container}  > div.pagenav a[rel="start"] strong,
+        {$pagenav_container} > div.pagenav a[title^="Last"] strong{
+            font-size: 2rem !important; /* Matches your toolbar font size */
+        }
+        
+        /* --- Replace Prev/Next Arrows with Guillemets --- */
+        /* Target the Previous button link */
+        {$pagenav_container} > div.pagenav a[rel="prev"] {
+            font-size: 0 !important; /* Hide the existing '<' character */
+        }
+
+        {$pagenav_container} > div.pagenav a[rel="prev"]::before {
+            content: "‹"; /* Single left-pointing guillemet */
+            font-size: 2rem !important; /* Restore visibility with standard rem size */
+            font-weight: bold;
+        }
+
+        /* Target the Next button link */
+        {$pagenav_container} > div.pagenav a[rel="next"] {
+            font-size: 0 !important; /* Hide the existing '>' character */
+        }
+
+        {$pagenav_container} > div.pagenav a[rel="next"]::before {
+            content: "›"; /* Single right-pointing guillemet */
+            font-size: 2rem !important; /* Restore visibility with standard rem size */
+            font-weight: bold;
+        }
+        
+        /* Show threadslist and search results stats footer */
+        table#threadslist td.tfoot .smallfont {
+            color:#EBEBEB!important;
+            font-size: 1.4rem!important;
+        }        
     }
 }
 
@@ -983,6 +1066,13 @@ domain("forum.cockos.com") {
             word-wrap: normal !important;
             width: auto !important;
             max-width: 100% !important;
+        }
+        
+                
+        /* Fix youtube embeds overflowing */
+        div[id^=post_message_] iframe {
+            width: 100%;
+            max-width: 100%;
         }
 
         /* --- Quick Editor (Inline) --- */
