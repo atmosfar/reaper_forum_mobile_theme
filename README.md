@@ -23,7 +23,6 @@ Once you have the add-ons installed in your mobile browser, install the theme co
 
 - [Tampermonkey JavaScript](https://github.com/atmosfar/reaper_forum_mobile_theme/raw/refs/heads/main/src/reaper_forum_mobile_theme.user.js)
 - [Stylus CSS](https://github.com/atmosfar/reaper_forum_mobile_theme/raw/refs/heads/main/src/reaper_forum_mobile_theme.user.css)
-- 
 
 ## Updating
 
